@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syncros - Gerencie seus projetos com sincronismo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <style>
+        .glass {
+            background: rgba(17, 25, 40, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.125);
+        }
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen overflow-x-hidden">
+    <div id="canvas-container"></div>
+
+    <!-- Navbar -->
+    <nav class="glass fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="#features" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Recursos</a>
+                            <a href="#pricing" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Preços</a>
+                            <a href="#about" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sobre</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/login.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
+                    <a href="/register.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">Começar Grátis</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-4 pt-16">
+        <div class="glass p-8 rounded-2xl max-w-4xl z-10 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
+                Sincronize suas ideias.<br/>
+                <span class="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
+                    Realize seus projetos.
+                </span>
+            </h1>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Syncros é a plataforma que unifica seu time, seus projetos e suas metas em um só lugar. 
+                Gerencie tudo com simplicidade e eficiência.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="/register.html" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium rounded-lg transition-colors transition-all duration-300 transform hover:scale-[1.02]">
+                    Comece Agora
+                </a>
+                <a href="#demo" class="w-full sm:w-auto px-8 py-4 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white rounded-lg transition-all duration-300">
+                    Ver Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="relative py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-white text-center mb-12">Recursos Poderosos</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass p-6 rounded-xl feature-card transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Personalização Total</h3>
+                    <p class="text-gray-400">Adapte o Syncros ao seu modo de trabalho com workflows personalizáveis e dashboards flexíveis.</p>
+                </div>
+
+                <div class="glass p-6 rounded-xl feature-card transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Colaboração em Tempo Real</h3>
+                    <p class="text-gray-400">Trabalhe com sua equipe em tempo real, com atualizações instantâneas e comunicação integrada.</p>
+                </div>
+
+                <div class="glass p-6 rounded-xl feature-card transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Análise Avançada</h3>
+                    <p class="text-gray-400">Tome decisões baseadas em dados com relatórios detalhados e métricas em tempo real.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="relative py-20 px-4">
+        <div class="max-w-4xl mx-auto glass p-8 rounded-2xl text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Pronto para transformar sua gestão de projetos?</h2>
+            <p class="text-gray-300 mb-8">Junte-se a milhares de equipes que já estão usando o Syncros para alcançar seus objetivos.</p>
+            <a href="/register.html" class="inline-block px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium rounded-lg transition-colors transition-all duration-300 transform hover:scale-[1.02]">
+                Comece seu período gratuito
+            </a>
+        </div>
+    </section>
+    <!-- Adicione estas seções antes do CTA Section e depois do Features Section -->
+
+<!-- About Section -->
+<section id="about" class="relative py-20 px-4">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="glass p-8 rounded-2xl">
+                <h2 class="text-4xl font-bold text-white mb-6">
+                    Sobre o <span class="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">Syncros</span>
+                </h2>
+                <p class="text-gray-300 mb-6">
+                    O Syncros nasceu da necessidade de simplificar a gestão de projetos mantendo equipes conectadas e produtivas. Nossa missão é transformar a maneira como as equipes colaboram e alcançam seus objetivos.
+                </p>
+                <div class="space-y-4">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 mt-1">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">Nossa Visão</h3>
+                            <p class="text-gray-400">Ser a plataforma líder em gestão de projetos, reconhecida pela inovação e eficiência.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 mt-1">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">Nossos Valores</h3>
+                            <p class="text-gray-400">Transparência, colaboração e inovação contínua são os pilares que guiam nosso desenvolvimento.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-6">
+                <div class="glass p-6 rounded-xl text-center">
+                    <div class="text-4xl font-bold text-blue-500 mb-2">2K+</div>
+                    <p class="text-gray-400">Equipes Ativas</p>
+                </div>
+                <div class="glass p-6 rounded-xl text-center">
+                    <div class="text-4xl font-bold text-purple-500 mb-2">50K+</div>
+                    <p class="text-gray-400">Usuários</p>
+                </div>
+                <div class="glass p-6 rounded-xl text-center">
+                    <div class="text-4xl font-bold text-blue-500 mb-2">98%</div>
+                    <p class="text-gray-400">Satisfação</p>
+                </div>
+                <div class="glass p-6 rounded-xl text-center">
+                    <div class="text-4xl font-bold text-purple-500 mb-2">24/7</div>
+                    <p class="text-gray-400">Suporte</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing" class="relative py-20 px-4">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-white text-center mb-4">Planos e Preços</h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+            Escolha o plano ideal para sua equipe. Todos os planos incluem suporte prioritário e atualizações gratuitas.
+        </p>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Plano Starter -->
+            <div class="glass p-8 rounded-2xl hover:scale-105 transition-transform duration-300">
+                <div class="text-center mb-8">
+                    <h3 class="text-xl font-semibold text-white mb-2">Starter</h3>
+                    <div class="text-4xl font-bold text-white mb-4">
+                        R$ 29<span class="text-lg font-normal text-gray-400">/mês</span>
+                    </div>
+                    <p class="text-gray-400">Perfeito para pequenas equipes</p>
+                </div>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center text-gray-300">
+                        <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Até 5 membros
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        5GB de armazenamento
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        3 projetos simultâneos
+                    </li>
+                </ul>
+                <button class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-colors">
+                    Começar Grátis
+                </button>
+            </div>
+
+            <!-- Plano Pro -->
+            <div class="glass p-8 rounded-2xl hover:scale-105 transition-transform duration-300 border-2 border-blue-500">
+                <div class="absolute top-0 right-0 bg-blue-500 px-4 py-1 rounded-bl-lg rounded-tr-xl text-sm font-semibold">
+                    Popular
+                </div>
+                <div class="text-center mb-8">
+                    <h3 class="text-xl font-semibold text-white mb-2">Pro</h3>
+                    <div class="text-4xl font-bold text-white mb-4">
+                        R$ 79<span class="text-lg font-normal text-gray-400">/mês</span>
+                    </div>
+                    <p class="text-gray-400">Para equipes em crescimento</p>
+                </div>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center text-gray-300">
+                        <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Até 20 membros
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        50GB de armazenamento
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Projetos ilimitados
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Relatórios avançados
+                    </li>
+                </ul>
+                <button class="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium rounded-lg transition-colors">
+                    Começar Agora
+                </button>
+            </div>
+
+            <!-- Plano Enterprise -->
+            <div class="glass p-8 rounded-2xl hover:scale-105 transition-transform duration-300">
+                <div class="text-center mb-8">
+                    <h3 class="text-xl font-semibold text-white mb-2">Enterprise</h3>
+                    <div class="text-4xl font-bold text-white mb-4">
+                        Personalizado
+                    </div>
+                    <p class="text-gray-400">Para grandes organizações</p>
+                </div>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center text-gray-300">
+                        <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Membros ilimitados
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Armazenamento personalizado
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        API dedicada
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Suporte 24/7 prioritário
+                    </li>
+                </ul>
+                <button class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-colors">
+                    Falar com Vendas
+                </button>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+<section id="faq" class="relative py-20 px-4 bg-gray-900">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-white text-center mb-4">Perguntas Frequentes</h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+            Confira as respostas para as perguntas mais comuns sobre o Syncros.
+        </p>
+        
+        <div class="space-y-6">
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-white">Como posso cancelar minha assinatura?</h3>
+                <p class="text-gray-400 mt-2">
+                    Você pode cancelar sua assinatura a qualquer momento acessando sua conta e clicando em "Configurações" > "Assinatura". Um e-mail de confirmação será enviado após o cancelamento.
+                </p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-white">Há uma versão gratuita do Syncros?</h3>
+                <p class="text-gray-400 mt-2">
+                    Sim! Oferecemos um período de teste gratuito de 14 dias, onde você pode explorar todas as funcionalidades do Syncros sem compromisso.
+                </p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-white">O Syncros é seguro para armazenar dados?</h3>
+                <p class="text-gray-400 mt-2">
+                    Absolutamente! Implementamos protocolos de segurança de ponta e criptografia de dados para garantir que suas informações permaneçam seguras e protegidas.
+                </p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-white">Posso integrar o Syncros com outras ferramentas?</h3>
+                <p class="text-gray-400 mt-2">
+                    Sim, o Syncros oferece integrações com várias ferramentas populares, incluindo Slack, Google Drive e Trello. Você pode encontrar uma lista completa de integrações na seção "Configurações" de sua conta.
+                </p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold text-white">Como posso entrar em contato com o suporte?</h3>
+                <p class="text-gray-400 mt-2">
+                    Você pode entrar em contato com nossa equipe de suporte 24/7 através da seção "Ajuda" em sua conta ou enviando um e-mail para suporte@syncros.com.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+        
+        <!-- CTA Section -->
+        <section id="cta" class="relative py-20 px-4 glass p-8 rounded-2xl">
+            <div class="max-w-7xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-white mb-4">Pronto para transformar sua equipe com o <span class="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">Syncros</span>?</h2>
+                <p class="text-gray-200 mb-8">Experimente o Syncros hoje e veja como podemos ajudar sua equipe a ser mais eficiente.</p>
+                <button class="py-3 px-6 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium rounded-lg transition-colors transition-all duration-300 transform hover:scale-[1.02]">
+                    Começar Agora
+                </button>
+            </div>
+        </section>
+        
+
+    <!-- Footer -->
+    <footer class="relative py-12 px-4 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Produto</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Recursos</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Preços</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Integrações</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Empresa</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Sobre</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Carreiras</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Suporte</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Documentação</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Tutoriais</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Privacidade</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Termos</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Segurança</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 text-center text-gray-400">
+                <p>&copy; 2024 Syncros. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+// Configuração da cena Three.js
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+// Criação dos objetos 3D interativos
+const objects = [];
+const geometries = [
+    new THREE.TorusGeometry(0.8, 0.2, 16, 100),
+    new THREE.OctahedronGeometry(0.7),
+    new THREE.TetrahedronGeometry(0.7),
+    new THREE.IcosahedronGeometry(0.7),
+    new THREE.SphereGeometry(0.6, 32, 32)
+];
+
+// Criação de materiais com gradientes e brilho
+const createGlowMaterial = () => {
+    return new THREE.MeshPhongMaterial({
+        color: new THREE.Color(`hsl(${190 + Math.random() * 60}, 70%, 50%)`), // Limitando a paleta de cores
+        emissive: new THREE.Color(`hsl(${200 + Math.random() * 40}, 70%, 30%)`),
+        shininess: 50,
+        transparent: true,
+        opacity: 0.7
+    });
+};
+
+// Distribuição mais controlada dos objetos
+const addObject = (x, y, z) => {
+    const geometry = geometries[Math.floor(Math.random() * geometries.length)];
+    const material = createGlowMaterial();
+    const object = new THREE.Mesh(geometry, material);
+    
+    object.position.set(x, y, z);
+    object.initialPosition = { x, y, z }; // Guardar posição inicial
+    object.rotationSpeed = {
+        x: (Math.random() - 0.5) * 0.01,
+        y: (Math.random() - 0.5) * 0.01
+    };
+    
+    objects.push(object);
+    scene.add(object);
+    return object;
+};
+
+// Criar objetos em posições específicas
+const createObjects = () => {
+    const radius = 6;
+    const heightVariation = 3;
+    
+    // Criar 12 objetos em um círculo
+    for (let i = 0; i < 12; i++) {
+        const angle = (i / 12) * Math.PI * 2;
+        const x = Math.cos(angle) * radius;
+        const z = Math.sin(angle) * radius;
+        const y = (Math.random() * 2 - 1) * heightVariation;
+        
+        addObject(x, y, z);
+    }
+};
+
+createObjects();
+
+// Iluminação mais suave
+const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+scene.add(ambientLight);
+
+// Luzes pontuais mais sutis
+const mainLight = new THREE.PointLight(0xffffff, 0.8);
+mainLight.position.set(0, 5, 10);
+scene.add(mainLight);
+
+const secondaryLight = new THREE.PointLight(0x4169e1, 0.4);
+secondaryLight.position.set(-5, -5, 5);
+scene.add(secondaryLight);
+
+camera.position.z = 12;
+
+// Interação com o mouse mais suave
+const mouse = new THREE.Vector2();
+let mouseX = 0;
+let mouseY = 0;
+let targetX = 0;
+let targetY = 0;
+
+document.addEventListener('mousemove', (event) => {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    
+    targetX = mouse.x * 2;
+    targetY = mouse.y * 2;
+});
+
+// Animação mais controlada
+function animate() {
+    requestAnimationFrame(animate);
+
+    // Movimento suave da câmera
+    mouseX += (targetX - mouseX) * 0.05;
+    mouseY += (targetY - mouseY) * 0.05;
+    camera.position.x = mouseX * 0.3;
+    camera.position.y = mouseY * 0.3;
+    camera.lookAt(scene.position);
+
+    // Rotação suave dos objetos
+    objects.forEach((object) => {
+        object.rotation.x += object.rotationSpeed.x;
+        object.rotation.y += object.rotationSpeed.y;
+        
+        // Movimento orbital suave
+        const time = Date.now() * 0.001;
+        const initialPos = object.initialPosition;
+        
+        // Movimento de flutuação muito sutil
+        object.position.y = initialPos.y + Math.sin(time + initialPos.x) * 0.1;
+        
+        // Movimento orbital lento
+        const orbitSpeed = 0.1;
+        object.position.x = initialPos.x * Math.cos(time * orbitSpeed) - initialPos.z * Math.sin(time * orbitSpeed);
+        object.position.z = initialPos.z * Math.cos(time * orbitSpeed) + initialPos.x * Math.sin(time * orbitSpeed);
+    });
+
+    renderer.render(scene, camera);
+}
+
+// Responsividade
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// Efeito de parallax no scroll mais suave
+let lastScrollTop = 0;
+window.addEventListener('scroll', () => {
+    const st = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollDirection = st > lastScrollTop ? 1 : -1;
+    
+    objects.forEach((object) => {
+        const scrollEffect = scrollDirection * 0.0005;
+        object.position.y = object.initialPosition.y - (st * scrollEffect);
+    });
+    
+    lastScrollTop = st <= 0 ? 0 : st;
+}, false);
+
+animate();
+    </script>
+</body>
+</html>

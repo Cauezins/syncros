@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Syncros - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      .glass {
+        background: rgba(17, 25, 40, 0.75);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.125);
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+      
+      /* Sidebar Styles */
+      .sidebar {
+        transition: all 0.3s ease;
+        width: 260px;
+      }
+      
+      .sidebar.collapsed {
+        width: 80px;
+      }
+      
+      .sidebar.collapsed .sidebar-text {
+        display: none;
+      }
+      
+      .sidebar.collapsed .logo-text {
+        display: none;
+      }
+      
+      .main-content {
+        transition: all 0.3s ease;
+        margin-left: 260px;
+      }
+      
+      .main-content.collapsed {
+        margin-left: 80px;
+      }
+      
+      /* Mobile Styles */
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+          position: fixed;
+          z-index: 50;
+        }
+        
+        .sidebar.mobile-active {
+          transform: translateX(0);
+        }
+        
+        .main-content {
+          margin-left: 0 !important;
+        }
+        
+        #projectChart {
+          height: 400px !important;
+        }
+        
+        .mobile-menu-overlay {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 40;
+        }
+        
+        .mobile-menu-overlay.active {
+          display: block;
+        }
+      }
+      
+      @media (min-width: 1024px) {
+        #projectChart {
+          height: 600px !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 min-h-screen overflow-x-hidden">
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+    
+    <!-- Mobile Toggle Button -->
+    <button id="mobileMenuBtn" class="fixed top-4 left-4 z-50 p-2 rounded-lg bg-gray-800 text-white md:hidden">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+
+    <!-- Sidebar -->
+    <aside class="sidebar glass border-r border-gray-700/50 fixed h-screen left-0 top-0" id="sidebar">
+      <div class="p-6">
+        <!-- Logo and Toggle -->
+        <div class="flex items-center justify-between mb-10">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <h1 class="text-2xl font-bold text-white logo-text">Syncros</h1>
+          </div>
+          
+          <!-- Desktop Toggle -->
+          <button id="sidebarToggle" class="text-white hidden md:block">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+            </svg>
+          </button>
+          
+          <!-- Mobile Close Button -->
+          <button id="mobileCloseBtn" class="text-white md:hidden">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Menu -->
+        <nav class="space-y-2">
+          <a href="#" class="flex items-center gap-3 text-white bg-blue-600/20 px-4 py-3 rounded-lg">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <span class="sidebar-text whitespace-nowrap">Dashboard</span>
+          </a>
+          
+          <a href="#" class="flex items-center gap-3 text-gray-400 hover:text-white px-4 py-3 rounded-lg hover:bg-gray-800/50">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <span class="sidebar-text whitespace-nowrap">Equipe</span>
+          </a>
+          
+          <a href="#" class="flex items-center gap-3 text-gray-400 hover:text-white px-4 py-3 rounded-lg hover:bg-gray-800/50">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+            <span class="sidebar-text whitespace-nowrap">Projetos</span>
+          </a>
+          
+          <a href="#" class="flex items-center gap-3 text-gray-400 hover:text-white px-4 py-3 rounded-lg hover:bg-gray-800/50">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <span class="sidebar-text whitespace-nowrap">Calendário</span>
+          </a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content p-8 relative z-10" id="mainContent">
+     <!-- Top Bar -->
+<div class="flex justify-between items-center mb-8">
+    <div class="flex-1">
+      <div class="relative max-w-md">
+        <input
+          type="text"
+          class="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors pl-10"
+          placeholder="Buscar..."
+        />
+        <svg
+          class="w-5 h-5 text-gray-400 absolute left-3 top-2.5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div class="flex items-center gap-4">
+      <!-- Notification Button with Dropdown -->
+      <div class="relative">
+        <button 
+          class="p-2 text-gray-400 hover:text-white relative" 
+          onclick="toggleDropdown('notificationDropdown')"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+            />
+          </svg>
+          <span
+            class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"
+          ></span>
+        </button>
+        <!-- Notification Dropdown -->
+        <div id="notificationDropdown" class="hidden absolute right-0 mt-2 w-80 bg-gray-800 rounded-lg shadow-lg border border-gray-700 z-50">
+          <div class="p-4 border-b border-gray-700">
+            <h3 class="text-lg font-semibold text-white">Notificações</h3>
+          </div>
+          <div class="max-h-96 overflow-y-auto">
+            <!-- Example Notifications -->
+            <div class="p-4 hover:bg-gray-700 border-b border-gray-700">
+              <div class="flex items-start gap-4">
+                <div class="w-2 h-2 mt-2 bg-blue-500 rounded-full"></div>
+                <div>
+                  <p class="text-sm text-white">Nova mensagem recebida</p>
+                  <span class="text-xs text-gray-400">Há 5 minutos</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-4 hover:bg-gray-700">
+              <div class="flex items-start gap-4">
+                <div class="w-2 h-2 mt-2 bg-blue-500 rounded-full"></div>
+                <div>
+                  <p class="text-sm text-white">Atualização do sistema</p>
+                  <span class="text-xs text-gray-400">Há 1 hora</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="p-4 border-t border-gray-700">
+            <a href="#" class="text-sm text-blue-400 hover:text-blue-300">Ver todas notificações</a>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Profile Button with Dropdown -->
+      <div class="relative">
+        <div
+          class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center cursor-pointer"
+          onclick="toggleDropdown('profileDropdown')"
+        >
+          <span class="text-white font-semibold">JS</span>
+        </div>
+        <!-- Profile Dropdown -->
+        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg border border-gray-700 z-50">
+          <div class="p-4 border-b border-gray-700">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                <span class="text-white font-semibold">JS</span>
+              </div>
+              <div>
+                <p class="text-sm font-medium text-white">John Smith</p>
+                <p class="text-xs text-gray-400">john@example.com</p>
+              </div>
+            </div>
+          </div>
+          <div class="py-2">
+            <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Perfil</a>
+            <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Configurações</a>
+            <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-gray-700">Ajuda</a>
+            <div class="border-t border-gray-700 mt-2 pt-2">
+              <a href="#" class="block px-4 py-2 text-sm text-red-400 hover:bg-gray-700">Sair</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- Dashboard Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Status Cards -->
+        <div class="glass rounded-xl p-6 card-hover">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-white">Projetos Ativos</h3>
+            <div class="p-2 bg-blue-500/20 rounded-lg">
+              <svg
+                class="w-6 h-6 text-blue-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="flex items-end gap-2">
+            <span class="text-4xl font-bold text-white">12</span>
+            <span class="text-green-500 flex items-center">
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                />
+              </svg>
+              +2.5%
+            </span>
+          </div>
+        </div>
+
+        <div class="glass rounded-xl p-6 card-hover">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-white">Membros da Equipe</h3>
+            <div class="p-2 bg-purple-500/20 rounded-lg">
+              <svg
+                class="w-6 h-6 text-purple-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="flex items-end gap-2">
+            <span class="text-4xl font-bold text-white">48</span>
+            <span class="text-green-500 flex items-center">
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                />
+              </svg>
+              +12%
+            </span>
+          </div>
+        </div>
+
+        <div class="glass rounded-xl p-6 card-hover">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-white">Tarefas Concluídas</h3>
+            <div class="p-2 bg-green-500/20 rounded-lg">
+              <svg
+                class="w-6 h-6 text-green-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="flex items-end gap-2">
+            <span class="text-4xl font-bold text-white">156</span>
+            <span class="text-green-500 flex items-center">
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                />
+              </svg>
+              +8.2%
+            </span>
+          </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="glass rounded-xl p-6 col-span-full card-hover">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-white">
+              Progresso dos Projetos
+            </h3>
+            <select
+              class="bg-gray-800/50 border border-gray-700 rounded-lg text-white px-3 py-1 text-sm"
+            >
+              <option>Últimos 7 dias</option>
+              <option>Último mês</option>
+              <option>Último ano</option>
+            </select>
+          </div>
+          <canvas
+            id="projectChart"
+            class="w-full h-64"
+            style="height: 600px"
+          ></canvas>
+        </div>
+      </div>
+    </main>
+    <script>
+      // Configuração do gráfico
+      const ctx = document.getElementById("projectChart").getContext("2d");
+      const chart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho"],
+          datasets: [
+            {
+              label: "Projetos Concluídos",
+              data: [12, 19, 15, 25, 22, 30],
+              borderColor: "#3B82F6",
+              backgroundColor: "rgba(59, 130, 246, 0.1)",
+              tension: 0.4,
+              fill: true,
+              borderWidth: 2,
+              pointRadius: 4,
+              pointBackgroundColor: "#3B82F6",
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            intersect: false,
+            mode: "index",
+          },
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              backgroundColor: "rgba(17, 25, 40, 0.9)",
+              padding: 12,
+              titleColor: "#fff",
+              bodyColor: "#fff",
+              borderColor: "rgba(255, 255, 255, 0.1)",
+              borderWidth: 1,
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: "rgba(255, 255, 255, 0.1)",
+              },
+              ticks: {
+                color: "rgba(255, 255, 255, 0.7)",
+                padding: 10,
+                callback: function (value) {
+                  return value + " proj.";
+                },
+              },
+            },
+            x: {
+              grid: {
+                color: "rgba(255, 255, 255, 0.1)",
+              },
+              ticks: {
+                color: "rgba(255, 255, 255, 0.7)",
+                padding: 10,
+              },
+            },
+          },
+        },
+      });
+
+      // Adicionar interatividade aos cards
+      document.querySelectorAll(".card-hover").forEach((card) => {
+        card.addEventListener("mouseenter", () => {
+          gsap.to(card, {
+            y: -5,
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        });
+
+        card.addEventListener("mouseleave", () => {
+          gsap.to(card, {
+            y: 0,
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        });
+      });
+
+      // Adicionar funcionalidade ao select do período
+      const periodSelect = document.querySelector("select");
+      const chartData = {
+        "Últimos 7 dias": [5, 8, 12, 9, 15, 10, 18],
+        "Último mês": [12, 19, 15, 25, 22, 30, 28, 35],
+        "Último ano": [30, 45, 55, 48, 62, 75, 80, 95, 88, 92, 98, 105],
+      };
+
+      periodSelect.addEventListener("change", (e) => {
+        const selectedPeriod = e.target.value;
+        let labels;
+
+        switch (selectedPeriod) {
+          case "Últimos 7 dias":
+            labels = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
+            break;
+          case "Último mês":
+            labels = ["Semana 1", "Semana 2", "Semana 3", "Semana 4"];
+            break;
+          case "Último ano":
+            labels = [
+              "Jan",
+              "Fev",
+              "Mar",
+              "Abr",
+              "Mai",
+              "Jun",
+              "Jul",
+              "Ago",
+              "Set",
+              "Out",
+              "Nov",
+              "Dez",
+            ];
+            break;
+        }
+
+        chart.data.labels = labels;
+        chart.data.datasets[0].data = chartData[selectedPeriod];
+        chart.update();
+      });
+
+            // Sidebar Toggle Logic
+            const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('mainContent');
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+      const mobileOverlay = document.getElementById('mobileOverlay');
+
+      // Desktop Toggle
+      sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+        mainContent.classList.toggle('collapsed');
+        
+        // Update toggle icon
+        const isCollapsed = sidebar.classList.contains('collapsed');
+        sidebarToggle.innerHTML = isCollapsed 
+          ? `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+             </svg>`
+          : `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+             </svg>`;
+      });
+
+      // Mobile Menu
+      function toggleMobileMenu() {
+        sidebar.classList.toggle('mobile-active');
+        mobileOverlay.classList.toggle('active');
+      }
+
+      mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+      mobileCloseBtn.addEventListener('click', toggleMobileMenu);
+      mobileOverlay.addEventListener('click', toggleMobileMenu);
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+          sidebar.classList.remove('mobile-active');
+          mobileOverlay.classList.remove('active');
+        }
+      });
+
+      // Keep track of open dropdowns
+let openDropdown = null;
+
+// Function to toggle dropdown
+function toggleDropdown(dropdownId) {
+    const dropdown = document.getElementById(dropdownId);
+    const isOpen = !dropdown.classList.contains('hidden');
+    
+    // Close any open dropdown first
+    if (openDropdown && openDropdown !== dropdown) {
+        openDropdown.classList.add('hidden');
+    }
+    
+    // Toggle current dropdown
+    dropdown.classList.toggle('hidden');
+    
+    // Update openDropdown reference
+    openDropdown = isOpen ? null : dropdown;
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('.relative')) {
+        if (openDropdown) {
+            openDropdown.classList.add('hidden');
+            openDropdown = null;
+        }
+    }
+});
+    </script>
+  </body>
+</html>

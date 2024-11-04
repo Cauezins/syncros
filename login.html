@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syncros - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <style>
+        .glass {
+            background: rgba(17, 25, 40, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.125);
+        }
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .floating-object {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .input-group {
+            position: relative;
+        }
+        .input-border {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3B82F6, #60A5FA);
+            transition: width 0.3s ease;
+        }
+        .input-group input:focus + .input-border {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen overflow-hidden">
+    <div id="canvas-container"></div>
+
+    <div class="relative min-h-screen flex items-center justify-center px-4">
+        <div class="glass p-8 rounded-2xl w-full max-w-md z-10 transform hover:scale-[1.01] transition-transform duration-300">
+            <!-- Logo & Title -->
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <h1 class="text-4xl font-bold text-white mb-2">Syncros</h1>
+                <p class="text-gray-400">Gerencie seus projetos com sincronismo</p>
+            </div>
+
+            <!-- Login Form -->
+            <form class="space-y-6">
+                <div class="input-group">
+                    <input type="email" 
+                           class="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none transition-colors"
+                           placeholder="seu@email.com">
+                    <div class="input-border"></div>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" 
+                           class="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white focus:outline-none transition-colors"
+                           placeholder="••••••••">
+                    <div class="input-border"></div>
+                </div>
+
+                <div class="flex items-center justify-between text-sm">
+                    <label class="flex items-center text-gray-400 cursor-pointer group">
+                        <div class="relative">
+                            <input type="checkbox" class="sr-only peer">
+                            <div class="w-10 h-4 bg-gray-700 rounded-full"></div>
+                            <div class="absolute left-1 top-1 w-2 h-2 bg-gray-400 rounded-full transition peer-checked:bg-blue-500 peer-checked:translate-x-6"></div>
+                        </div>
+                        <span class="ml-3">Lembrar-me</span>
+                    </label>
+                    <a href="#" class="text-blue-500 hover:text-blue-400 transition-colors">Esqueceu a senha?</a>
+                </div>
+
+                <button onclick="window.location.href = '/dashboard.html'" type="button" 
+                        class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-[1.02] focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900">
+                    Entrar
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-gray-400 text-sm">
+                <span>Não tem uma conta? </span>
+                <a href="/register.html" class="text-blue-500 hover:text-blue-400 transition-colors">Registre-se</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuração da cena Three.js
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // Criação dos objetos 3D interativos
+        const objects = [];
+        const geometries = [
+            new THREE.TorusGeometry(1, 0.3, 16, 100),
+            new THREE.OctahedronGeometry(1),
+            new THREE.TetrahedronGeometry(1),
+            new THREE.IcosahedronGeometry(1),
+            new THREE.SphereGeometry(1, 32, 32)
+        ];
+
+        // Criação de materiais com gradientes e brilho
+        const createGlowMaterial = () => {
+            return new THREE.MeshPhongMaterial({
+                color: new THREE.Color(`hsl(${Math.random() * 360}, 70%, 50%)`),
+                emissive: new THREE.Color(`hsl(${Math.random() * 360}, 70%, 30%)`),
+                shininess: 100,
+                transparent: true,
+                opacity: 0.9
+            });
+        };
+
+        // Adicionar objetos à cena
+        for (let i = 0; i < 8; i++) {
+            const geometry = geometries[Math.floor(Math.random() * geometries.length)];
+            const material = createGlowMaterial();
+            const object = new THREE.Mesh(geometry, material);
+            
+            // Posicionar objetos em círculo ao redor do card
+            const angle = (i / 8) * Math.PI * 2;
+            const radius = 5;
+            object.position.x = Math.cos(angle) * radius;
+            object.position.y = Math.sin(angle) * radius;
+            object.position.z = -2;
+            
+            objects.push(object);
+            scene.add(object);
+        }
+
+        // Iluminação
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        const pointLight = new THREE.PointLight(0xffffff, 1);
+        pointLight.position.set(10, 10, 10);
+        scene.add(ambientLight);
+        scene.add(pointLight);
+
+        camera.position.z = 10;
+
+        // Interação com o mouse
+        const mouse = new THREE.Vector2();
+        const raycaster = new THREE.Raycaster();
+
+        document.addEventListener('mousemove', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            // Atualizar raycaster
+            raycaster.setFromCamera(mouse, camera);
+
+            // Verificar interseções
+            const intersects = raycaster.intersectObjects(objects);
+
+            objects.forEach(object => {
+                // Reset de escala
+                gsap.to(object.scale, {
+                    x: 1,
+                    y: 1,
+                    z: 1,
+                    duration: 0.5
+                });
+            });
+
+            // Animar objetos em interseção
+            intersects.forEach(intersect => {
+                gsap.to(intersect.object.scale, {
+                    x: 1.5,
+                    y: 1.5,
+                    z: 1.5,
+                    duration: 0.3
+                });
+            });
+        });
+
+        // Animação dos objetos
+        function animate() {
+            requestAnimationFrame(animate);
+
+            objects.forEach(object => {
+                object.rotation.x += 0.01;
+                object.rotation.y += 0.01;
+            });
+
+            // Movimento suave dos objetos
+            const time = Date.now() * 0.001;
+            objects.forEach((object, index) => {
+                const angle = (index / objects.length) * Math.PI * 2;
+                const radius = 5;
+                object.position.x = Math.cos(angle + time) * radius;
+                object.position.y = Math.sin(angle + time) * radius;
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        // Responsividade
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>
