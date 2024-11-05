@@ -5,7 +5,6 @@ import { HelmetProvider } from 'react-helmet-async';
 import Home from './pages/Home';
 import './index.css'
 import Login from './pages/Login';
-//commit
 import Signup from './pages/Signup';
 
 createRoot(document.getElementById('root')).render(
