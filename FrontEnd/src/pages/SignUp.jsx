@@ -4,7 +4,7 @@ import { gsap } from 'gsap';
 import SignUpSection from '../components/signup/SignUpSection';
 import '@/assets/css/SignUpPage/style.css'
 
-function SignUp() {
+function Signup() {
     const containerRef = useRef();
 
     useEffect(() => {
@@ -141,4 +141,4 @@ function SignUp() {
     );
 }
 
-export default SignUp;
+export default Signup;
