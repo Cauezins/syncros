@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import "../assets/css/home/style.css"; // Verifique se o caminho está correto
 import NavBar from '../components/home/NavBar';
 import HeroSection from '../components/home/HeroSection';
 import * as THREE from 'three';
