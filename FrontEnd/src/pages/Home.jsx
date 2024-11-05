@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import NavBar from '../components/home/NavBar';
 import HeroSection from '../components/home/HeroSection';
-import '../assets/css/Home/style.css';
 import * as THREE from 'three';
 import FeatureSection from '../components/home/FeatureSection';
 import CTaSection from '../components/home/CTaSection';
