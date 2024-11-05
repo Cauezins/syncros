@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import '@/assets/css/Home/style.css';
+import '@/assets/css/homePage/style.css';
 import NavBar from '../components/home/NavBar';
 import HeroSection from '../components/home/HeroSection';
 import * as THREE from 'three';
