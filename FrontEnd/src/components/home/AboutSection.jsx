@@ -9,7 +9,7 @@ function AboutSection(){
             <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div className="glass p-8 rounded-2xl">
                     <h2 className="text-4xl font-bold text-white mb-6">
-                        Sobre o <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">S..</span>
+                        Sobre o <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">Syncros</span>
                     </h2>
                     <p className="text-gray-300 mb-6">
                         O Syncros nasceu da necessidade de simplificar a gestão de projetos mantendo equipes conectadas e produtivas. Nossa missão é transformar a maneira como as equipes colaboram e alcançam seus objetivos.
