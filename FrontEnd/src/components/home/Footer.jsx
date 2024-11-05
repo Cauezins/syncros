@@ -37,7 +37,7 @@ function Footer(){
                 </div>
             </div>
             <div className="mt-12 text-center text-gray-400">
-                <p>&copy; 2024 S.... Todos os direitos reservados.</p>
+                <p>&copy; 2024 Syncros. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>

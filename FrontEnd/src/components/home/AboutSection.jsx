@@ -12,7 +12,7 @@ function AboutSection(){
                         Sobre o <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">S..</span>
                     </h2>
                     <p className="text-gray-300 mb-6">
-                        O S... nasceu da necessidade de simplificar a gestão de projetos mantendo equipes conectadas e produtivas. Nossa missão é transformar a maneira como as equipes colaboram e alcançam seus objetivos.
+                        O Syncros nasceu da necessidade de simplificar a gestão de projetos mantendo equipes conectadas e produtivas. Nossa missão é transformar a maneira como as equipes colaboram e alcançam seus objetivos.
                     </p>
                     <div className="space-y-4">
                         <div className="flex items-start space-x-4">

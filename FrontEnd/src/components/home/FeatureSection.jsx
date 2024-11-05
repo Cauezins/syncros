@@ -15,7 +15,7 @@ function FeatureSection() {
                         </svg>
                     </div>
                     <h3 className="text-xl font-semibold text-white mb-2">Personalização Total</h3>
-                    <p className="text-gray-400">Adapte o S... ao seu modo de trabalho com workflows personalizáveis e dashboards flexíveis.</p>
+                    <p className="text-gray-400">Adapte o Syncros ao seu modo de trabalho com workflows personalizáveis e dashboards flexíveis.</p>
                 </div>
 
                 <div className="glass p-6 rounded-xl feature-card transition-all duration-300">

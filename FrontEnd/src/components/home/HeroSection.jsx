@@ -13,7 +13,7 @@ function HeroSection(){
                 </span>
             </h1>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-                {/*Syncros*/}S... é a plataforma que unifica seu time, seus projetos e suas metas em um só lugar. 
+                {/*Syncros*/}Syncros é a plataforma que unifica seu time, seus projetos e suas metas em um só lugar. 
                 Gerencie tudo com simplicidade e eficiência.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
