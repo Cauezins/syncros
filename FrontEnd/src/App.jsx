@@ -5,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import Home from './pages/Home';
 import './index.css'
 import Login from './pages/Login';
+import SignUp from './pages/Signup';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -13,8 +14,11 @@ createRoot(document.getElementById('root')).render(
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path='/signup' element={ <SignUp /> } />
+          <Route path="*" element={<div>404 Not Found</div>} />
         </Routes>
       </Router>
+      
     </HelmetProvider>
   </StrictMode>,
 )

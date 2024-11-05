@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function LoginSection() {
     return (
         <div className="relative min-h-screen flex items-center justify-center px-4">
@@ -51,7 +53,7 @@ function LoginSection() {
   
           <div className="mt-6 text-center text-gray-400 text-sm">
             <span>Não tem uma conta? </span>
-            <a className="cursor-pointer text-blue-500 hover:text-blue-400 transition-colors">Registre-se</a>
+            <Link to="/signup" className="cursor-pointer text-blue-500 hover:text-blue-400 transition-colors">Registre-se</Link>
           </div>
         </div>
       </div>
