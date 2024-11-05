@@ -2,7 +2,7 @@
 import { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import gsap from 'gsap';
-import '../assets/css/Login/style.css'
+import '@/assets/css/login/style.css'
 import LoginSection from '../components/login/LoginSection';
 
 function Login() {
