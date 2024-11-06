@@ -16,11 +16,81 @@ function PricingSection() {
           Planos e Preços
         </h2>
         <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-          Escolha o plano ideal para sua equipe. Todos os planos incluem suporte
-          prioritário e atualizações gratuitas.
+          Escolha o plano ideal para sua equipe.{" "}
+          <b className="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
+            O sistema ainda está em desenvolvimento e passando por testes, então
+            aproveite o plano gratuito enquanto preparamos novidades para você!
+          </b>
         </p>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-4 gap-8">
+          <div className="glass p-8 rounded-2xl hover:scale-105 transition-transform duration-300">
+            <div className="text-center mb-8">
+              <h3 className="text-xl font-semibold text-white mb-2">
+                Gratuito
+              </h3>
+              <div className="text-4xl font-bold text-white mb-4">
+                R$ 0
+                <span className="text-lg font-normal text-gray-400">/mês</span>
+              </div>
+              <p className="text-gray-400">Ideal para novos usuários</p>
+            </div>
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-center text-gray-300">
+                <svg
+                  className="w-5 h-5 text-blue-500 mr-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                Até 3 membros
+              </li>
+              <li className="flex items-center text-gray-300">
+                <svg
+                  className="w-5 h-5 text-blue-500 mr-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                1 projeto
+              </li>
+              <li className="flex items-center text-gray-300">
+                <svg
+                  className="w-5 h-5 text-blue-500 mr-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                Kanban básico
+              </li>
+            </ul>
+            <Link to="/signup">
+              <button className="w-full py-3 px-4 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-medium rounded-lg transition-colors">
+                Experimentar Grátis
+              </button>
+            </Link>
+          </div>
           <div className="glass p-8 rounded-2xl hover:scale-105 transition-transform duration-300">
             <div className="text-center mb-8">
               <h3 className="text-xl font-semibold text-white mb-2">Starter</h3>
@@ -61,7 +131,7 @@ function PricingSection() {
                     d="M5 13l4 4L19 7"
                   ></path>
                 </svg>
-                5GB de armazenamento
+                3 projetos simultâneos
               </li>
               <li className="flex items-center text-gray-300">
                 <svg
@@ -77,15 +147,13 @@ function PricingSection() {
                     d="M5 13l4 4L19 7"
                   ></path>
                 </svg>
-                3 projetos simultâneos
+                Kanban básico
               </li>
             </ul>
             <Link to="/signup">
-            <button
-              className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-colors"
-            >
-              Começar Grátis
-            </button>
+              <button className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-colors">
+                Começar Grátis
+              </button>
             </Link>
           </div>
 
@@ -132,22 +200,6 @@ function PricingSection() {
                     d="M5 13l4 4L19 7"
                   ></path>
                 </svg>
-                50GB de armazenamento
-              </li>
-              <li className="flex items-center text-gray-300">
-                <svg
-                  className="w-5 h-5 text-blue-500 mr-3"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  ></path>
-                </svg>
                 Projetos ilimitados
               </li>
               <li className="flex items-center text-gray-300">
@@ -164,15 +216,29 @@ function PricingSection() {
                     d="M5 13l4 4L19 7"
                   ></path>
                 </svg>
-                Relatórios avançados
+                Kanban personalizado
+              </li>
+              <li className="flex items-center text-gray-300">
+                <svg
+                  className="w-5 h-5 text-blue-500 mr-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                Automação de tarefas
               </li>
             </ul>
             <Link to="/signup">
-            <button
-              className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium rounded-lg transition-colors"
-            >
-              Começar Agora
-            </button>
+              <button className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium rounded-lg transition-colors">
+                Começar Agora
+              </button>
             </Link>
           </div>
 
@@ -217,7 +283,7 @@ function PricingSection() {
                     d="M5 13l4 4L19 7"
                   ></path>
                 </svg>
-                Armazenamento personalizado
+                Painéis personalizados
               </li>
               <li className="flex items-center text-gray-300">
                 <svg
@@ -253,9 +319,7 @@ function PricingSection() {
               </li>
             </ul>
             <Link to="/suport">
-              <button
-                className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-colors"
-              >
+              <button className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-colors">
                 Falar com Vendas
               </button>
             </Link>

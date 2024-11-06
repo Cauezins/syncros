@@ -41,15 +41,15 @@ function AboutSection(){
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                     <div className="glass p-6 rounded-xl text-center">
-                        <div className="text-4xl font-bold text-blue-500 mb-2">2K+</div>
+                        <div className="text-4xl font-bold text-blue-500 mb-2">5+</div>
                         <p className="text-gray-400">Equipes Ativas</p>
                     </div>
                     <div className="glass p-6 rounded-xl text-center">
-                        <div className="text-4xl font-bold text-purple-500 mb-2">50K+</div>
+                        <div className="text-4xl font-bold text-purple-500 mb-2">20+</div>
                         <p className="text-gray-400">Usuários</p>
                     </div>
                     <div className="glass p-6 rounded-xl text-center">
-                        <div className="text-4xl font-bold text-blue-500 mb-2">98%</div>
+                        <div className="text-4xl font-bold text-blue-500 mb-2">95%</div>
                         <p className="text-gray-400">Satisfação</p>
                     </div>
                     <div className="glass p-6 rounded-xl text-center">
