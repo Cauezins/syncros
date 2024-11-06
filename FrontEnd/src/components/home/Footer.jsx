@@ -8,13 +8,14 @@ const Footer = () => {
     { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
     { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
     { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg' },
+    { name: 'Next.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg' },
     { name: 'Tailwind', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg' },
     { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg' }
   ];
 
   const developers = [
     { name: 'Cauê Neves', role: 'Frontend', github: 'https://github.com/Cauezins' },
-    { name: 'Kauan Pinto', role: 'Backend', github: 'https://github.com/KauanAg-devs' }
+    { name: 'Kauan Rosa', role: 'Backend', github: 'https://github.com/KauanAg-devs' }
   ];
 
   return (
@@ -93,7 +94,7 @@ const Footer = () => {
                 className="group flex items-center p-4 bg-gray-800/30 rounded-xl border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300"
               >
                 <div className="flex-1">
-                  <h4 className="text-white font-medium">Licença MIT</h4>
+                  <h4 className="text-white font-medium">Licença Creative Commons</h4>
                   <p className="text-sm text-gray-400">Termos de uso</p>
                 </div>
                 <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-400 transition-colors" />
