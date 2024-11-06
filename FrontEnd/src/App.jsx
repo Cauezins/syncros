@@ -6,19 +6,24 @@ import Home from './pages/Home';
 import './index.css'
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ErrorPage from './pages/ErrorPage';
+import BaseLayout from './components/BaseLayout';
+import LicensePage from './pages/LicensePage';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <HelmetProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path='/signup' element={ <Signup /> } />
-          <Route path="*" element={<div>404 Not Found</div>} />
+          <Route element={<BaseLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/license" element={<LicensePage/>} />
+            <Route path="*" element={<ErrorPage />} />
+          </Route>
         </Routes>
       </Router>
-      
     </HelmetProvider>
-  </StrictMode>,
+  </StrictMode>
 )
